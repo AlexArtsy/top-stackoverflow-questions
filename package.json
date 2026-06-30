@@ -13,7 +13,7 @@
   "license": "MIT",
   "author": "AlexArts",
   "type": "module",
-  "main": "index.ts",
+  "main": "src/index.tsx",
   "scripts": {
     "start": "webpack serve --mode development",
     "build": "webpack --mode production",
