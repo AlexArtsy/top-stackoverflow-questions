@@ -1,4 +1,4 @@
-type Props = {
+interface Props {
     data: string;
 };
 export const ListItemContent: React.FC<Props> = ({ data }) => {

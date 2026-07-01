@@ -1,20 +1,128 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ListItemContent } from "./list-item-content";
+import { useDrag, useDrop } from "react-dnd";
+import { SOQuestion } from "../model/types";
+import { Identifier, XYCoord } from "dnd-core";
 
-type Props = {
-    data: string;
+// TODO: шта это?! удалить потом!
+const ItemTypes = {
+	CARD: 'card',
+}
+
+interface DragItem {
+	index: number
+	id: string
+	type: string
+}
+
+
+// TODO: на первое время
+const style = {
+	border: '1px dashed gray',
+	padding: '0.5rem 1rem',
+	marginBottom: '.5rem',
+	backgroundColor: 'white',
+	cursor: 'move',
+}
+
+interface Props {
+    id: number;
+    index: number;
+    question: SOQuestion;
+    moveItem: (dragIndex: number, hoverIndex: number) => void;
 };
-export const ListItem: React.FC<Props> = ({ data }) => {
+
+export const ListItem: React.FC<Props> = ({ id, index, question, moveItem }) => {
     const [ isOpened, setIsOpened ] = useState<boolean>();
+    const ref = useRef<HTMLDivElement>(null)
 
     const onClickHandle = () => {
         setIsOpened((prev) => !prev);
     };
 
+    	const [{ handlerId }, drop] = useDrop<
+		DragItem,
+		void,
+		{ handlerId: Identifier | null }
+	>({
+		accept: ItemTypes.CARD,
+		collect(monitor) {
+			return {
+				handlerId: monitor.getHandlerId(),
+			}
+		},
+		hover(item: DragItem, monitor) {
+			if (!ref.current) {
+				return
+			}
+			const dragIndex = item.index
+			const hoverIndex = index
+
+			// Don't replace items with themselves
+			if (dragIndex === hoverIndex) {
+				return
+			}
+
+			// Determine rectangle on screen
+			const hoverBoundingRect = ref.current?.getBoundingClientRect()
+
+			// Get vertical middle
+			const hoverMiddleY =
+				(hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
+
+			// Determine mouse position
+			const clientOffset = monitor.getClientOffset()
+
+			// Get pixels to the top
+			const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top
+
+			// Only perform the move when the mouse has crossed half of the items height
+			// When dragging downwards, only move when the cursor is below 50%
+			// When dragging upwards, only move when the cursor is above 50%
+
+			// Dragging downwards
+			if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+				return
+			}
+
+			// Dragging upwards
+			if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+				return
+			}
+
+			// Time to actually perform the action
+			moveItem(dragIndex, hoverIndex)
+
+			// Note: we're mutating the monitor item here!
+			// Generally it's better to avoid mutations,
+			// but it's good here for the sake of performance
+			// to avoid expensive index searches.
+			item.index = hoverIndex
+		},
+	})
+
+	const [{ isDragging }, drag] = useDrag({
+		type: ItemTypes.CARD,
+		item: () => {
+			return { id, index }
+		},
+		collect: (monitor: any) => ({
+			isDragging: monitor.isDragging(),
+		}),
+	})
+
+	const opacity = isDragging ? 0 : 1
+	drag(drop(ref))
+
     return (
-        <div onClick={onClickHandle}>
-            {data}
-            {isOpened && <ListItemContent data={data} />}
+        <div
+            ref={ref}
+            style={{ ...style, opacity }}
+            data-handler-id={handlerId}
+            onClick={onClickHandle}
+        >
+            {question.text}
+            {isOpened && <ListItemContent data={question.text} />}
         </div>
     );
 };
