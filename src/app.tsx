@@ -1,3 +1,13 @@
+import { Body } from "./view/body";
+import { Footer } from "./view/footer";
+import { Header } from "./view/header";
+
 export default function App() {
-  return <h1>Hello, Stackoverflow!</h1>;
+  return (
+    <div>
+      <Header />
+      <Body />
+      <Footer />
+    </div>
+  );
 }
