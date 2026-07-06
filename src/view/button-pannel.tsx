@@ -2,8 +2,8 @@ import { ITEM_COUNT } from '../model/types';
 
 interface Props {
   itemIndex: number;
-  onUpClickHandle: () => void;
-  onDownClickHandle: () => void;
+  onUpClickHandle: (e: React.MouseEvent) => void;
+  onDownClickHandle: (e: React.MouseEvent) => void;
 }
 export const ButtonPannel: React.FC<Props> = ({
   itemIndex,

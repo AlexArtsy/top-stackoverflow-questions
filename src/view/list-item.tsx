@@ -1,20 +1,7 @@
-import { useRef, useState } from 'react';
 import { ListItemContent } from './list-item-content';
-import { useDrag, useDrop } from 'react-dnd';
 import { ITEM_COUNT, SOQuestion } from '../model/types';
-import { Identifier, XYCoord } from 'dnd-core';
 import { ButtonPannel } from './button-pannel';
-
-// TODO: шта это?! удалить потом!
-const ItemTypes = {
-  CARD: 'card'
-};
-
-interface DragItem {
-  index: number;
-  id: number;
-  type: string;
-}
+import { useDragAndDrop } from '../hooks/use-drag-and-drop';
 
 // TODO: на первое время
 const style = {
@@ -26,107 +13,37 @@ const style = {
 };
 
 interface Props {
-  id: number;
-  index: number;
+  itemId: number;
+  isOpened: boolean;
+  position: number;
   question: SOQuestion;
+  onToggle: () => void;
   moveItem: (dragIndex: number, hoverIndex: number) => void;
 }
 
-export const ListItem: React.FC<Props> = ({ id, index, question, moveItem }) => {
-  const [isOpened, setIsOpened] = useState<boolean>();
-  const ref = useRef<HTMLDivElement>(null);
+export const ListItem: React.FC<Props> = ({ itemId, isOpened, position: index, question, onToggle, moveItem }) => {
+  const { ref, isDragging, handlerId } = useDragAndDrop(index, itemId, moveItem);
 
-  const onClickHandle = () => {
-    setIsOpened((prev) => !prev);
-  };
-
-  const [{ handlerId }, drop] = useDrop<DragItem, void, { handlerId: Identifier | null }>({
-    accept: ItemTypes.CARD,
-    collect(monitor) {
-      return {
-        handlerId: monitor.getHandlerId()
-      };
-    },
-    hover(item: DragItem, monitor) {
-      if (!ref.current) {
-        return;
-      }
-      const dragIndex = item.index;
-      const hoverIndex = index;
-
-      // Don't replace items with themselves
-      if (dragIndex === hoverIndex) {
-        return;
-      }
-
-      // Determine rectangle on screen
-      const hoverBoundingRect = ref.current?.getBoundingClientRect();
-
-      // Get vertical middle
-      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-
-      // Determine mouse position
-      const clientOffset = monitor.getClientOffset();
-
-      // Get pixels to the top
-      const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top;
-
-      // Only perform the move when the mouse has crossed half of the items height
-      // When dragging downwards, only move when the cursor is below 50%
-      // When dragging upwards, only move when the cursor is above 50%
-
-      // Dragging downwards
-      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-        return;
-      }
-
-      // Dragging upwards
-      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-        return;
-      }
-
-      // Time to actually perform the action
-      moveItem(dragIndex, hoverIndex);
-
-      // Note: we're mutating the monitor item here!
-      // Generally it's better to avoid mutations,
-      // but it's good here for the sake of performance
-      // to avoid expensive index searches.
-      item.index = hoverIndex;
-    }
-  });
-
-  const [{ isDragging }, drag] = useDrag({
-    type: ItemTypes.CARD,
-    item: () => {
-      return { id, index };
-    },
-    collect: (monitor: any) => ({
-      isDragging: monitor.isDragging()
-    })
-  });
-
-  const opacity = isDragging ? 0 : 1;
-  drag(drop(ref));
-
-  const onUpClickHandle = () => {
+  const onUpClickHandle = (e: React.MouseEvent) => {
     if (index === 0) return;
 
+    e.stopPropagation();
     moveItem(index, index - 1);
   };
 
-  const onDownClickHandle = () => {
+  const onDownClickHandle = (e: React.MouseEvent) => {
     if (index === ITEM_COUNT - 1) return;
 
+    e.stopPropagation();
     moveItem(index, index + 1);
   };
 
   return (
     <div
       ref={ref}
-      style={{ ...style, opacity }}
+      style={{ ...style, opacity: isDragging ? 0 : 1 }}
       data-handler-id={handlerId}
-      onClick={onClickHandle}
+      onClick={onToggle}
     >
       <div>
         {question.title}
@@ -136,7 +53,7 @@ export const ListItem: React.FC<Props> = ({ id, index, question, moveItem }) => 
           onDownClickHandle={onDownClickHandle}
         />
       </div>
-      {isOpened && <ListItemContent data={question.title} />}
+      {isOpened && <ListItemContent question={question} />}
     </div>
   );
 };

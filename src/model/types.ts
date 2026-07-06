@@ -5,7 +5,13 @@ export const SOQuestionSchema = z.object({
   title: z.string(),
   link: z.url(),
   score: z.number(),
-  body: z.string()
+  body: z.string(),
+  owner: z.object({
+    display_name: z.string(),
+    reputation: z.number()
+  }),
+  view_count: z.number(),
+  last_activity_date: z.number()
 });
 
 export const SOApiResponseSchema = z.object({
