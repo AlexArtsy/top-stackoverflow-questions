@@ -17,22 +17,22 @@ export default tseslint.config(
     ...reactPlugin.configs.flat['jsx-runtime'],
     settings: {
       react: {
-        version: 'detect',
-      },
-    },
+        version: 'detect'
+      }
+    }
   },
   // 4. Дополнительные правила для всех файлов
   {
     plugins: {
       'react-hooks': reactHooks,
       unicorn,
-      prettier: prettierPlugin,
+      prettier: prettierPlugin
     },
     languageOptions: {
       globals: {
         ...globals.browser,
-        ...globals.es2021,
-      },
+        ...globals.es2021
+      }
     },
     rules: {
       // React Hooks
@@ -47,18 +47,18 @@ export default tseslint.config(
         'error',
         {
           case: 'kebabCase',
-          ignore: ['\\.(test|spec)\\.(js|jsx|ts|tsx)$', '^[A-Z]+\\.(js|jsx|ts|tsx)$'],
-        },
+          ignore: ['\\.(test|spec)\\.(js|jsx|ts|tsx)$', '^[A-Z]+\\.(js|jsx|ts|tsx)$']
+        }
       ],
       // Prettier
       'prettier/prettier': 'error',
       // Прочие
       'no-console': 'warn',
-      'no-debugger': 'error',
-    },
+      'no-debugger': 'error'
+    }
   },
   // 6. Игноры
   {
-    ignores: ['dist/', 'node_modules/', 'webpack.config.*', 'eslint.config.*', '.prettierrc*'],
-  },
+    ignores: ['dist/', 'node_modules/', 'webpack.config.*', 'eslint.config.*', '.prettierrc*']
+  }
 );

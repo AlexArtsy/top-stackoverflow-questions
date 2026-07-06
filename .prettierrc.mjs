@@ -1,7 +1,7 @@
 export default {
   semi: true,
   singleQuote: true,
-  trailingComma: 'all',
+  trailingComma: 'none',
   printWidth: 100, // Современные мониторы позволяют увеличить до 100-120
   tabWidth: 2,
   useTabs: false, // Лучше использовать пробелы для кроссплатформенной совместимости
@@ -14,20 +14,20 @@ export default {
     {
       files: ['*.{ts,tsx}'],
       options: {
-        parser: 'typescript',
-      },
+        parser: 'typescript'
+      }
     },
     {
       files: ['*.json'],
       options: {
-        tabWidth: 2,
-      },
+        tabWidth: 2
+      }
     },
     {
       files: ['*.css', '*.scss'],
       options: {
-        singleQuote: false,
-      },
-    },
-  ],
+        singleQuote: false
+      }
+    }
+  ]
 };

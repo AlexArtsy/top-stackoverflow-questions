@@ -7,12 +7,12 @@ import { ButtonPannel } from './button-pannel';
 
 // TODO: шта это?! удалить потом!
 const ItemTypes = {
-  CARD: 'card',
+  CARD: 'card'
 };
 
 interface DragItem {
   index: number;
-  id: string;
+  id: number;
   type: string;
 }
 
@@ -22,7 +22,7 @@ const style = {
   padding: '0.5rem 1rem',
   marginBottom: '.5rem',
   backgroundColor: 'white',
-  cursor: 'move',
+  cursor: 'move'
 };
 
 interface Props {
@@ -44,7 +44,7 @@ export const ListItem: React.FC<Props> = ({ id, index, question, moveItem }) => 
     accept: ItemTypes.CARD,
     collect(monitor) {
       return {
-        handlerId: monitor.getHandlerId(),
+        handlerId: monitor.getHandlerId()
       };
     },
     hover(item: DragItem, monitor) {
@@ -93,7 +93,7 @@ export const ListItem: React.FC<Props> = ({ id, index, question, moveItem }) => 
       // but it's good here for the sake of performance
       // to avoid expensive index searches.
       item.index = hoverIndex;
-    },
+    }
   });
 
   const [{ isDragging }, drag] = useDrag({
@@ -102,8 +102,8 @@ export const ListItem: React.FC<Props> = ({ id, index, question, moveItem }) => 
       return { id, index };
     },
     collect: (monitor: any) => ({
-      isDragging: monitor.isDragging(),
-    }),
+      isDragging: monitor.isDragging()
+    })
   });
 
   const opacity = isDragging ? 0 : 1;
@@ -129,14 +129,14 @@ export const ListItem: React.FC<Props> = ({ id, index, question, moveItem }) => 
       onClick={onClickHandle}
     >
       <div>
-        {question.text}
+        {question.title}
         <ButtonPannel
           itemIndex={index}
           onUpClickHandle={onUpClickHandle}
           onDownClickHandle={onDownClickHandle}
         />
       </div>
-      {isOpened && <ListItemContent data={question.text} />}
+      {isOpened && <ListItemContent data={question.title} />}
     </div>
   );
 };

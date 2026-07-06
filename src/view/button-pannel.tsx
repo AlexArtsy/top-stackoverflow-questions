@@ -8,7 +8,7 @@ interface Props {
 export const ButtonPannel: React.FC<Props> = ({
   itemIndex,
   onUpClickHandle,
-  onDownClickHandle,
+  onDownClickHandle
 }) => {
   return (
     <div>
