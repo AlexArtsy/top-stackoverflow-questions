@@ -2,7 +2,6 @@ import { ListItemContent } from './list-item-content';
 import { SOQuestion } from '../../model/types';
 import { ButtonPannel } from './button-pannel';
 import { useDragAndDrop } from '../../hooks/use-drag-and-drop';
-import { ITEM_COUNT } from '../../config';
 
 // TODO: на первое время
 const style = {
@@ -42,7 +41,7 @@ export const ListItem: React.FC<Props> = ({
   };
 
   const onDownClickHandle = (e: React.MouseEvent) => {
-    if (index === ITEM_COUNT - 1) return;
+    if (index === itemCount - 1) return;
 
     e.stopPropagation();
     moveItem(index, index + 1);
