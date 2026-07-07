@@ -39,7 +39,13 @@ export default (_, argv) => {
       port: 3000,
       hot: true,
       open: true,
-      historyApiFallback: true
+      historyApiFallback: true,
+      client: {
+        overlay: {
+          errors: true,
+          warnings: false
+        }
+      }
     },
     devtool: isDev ? 'eval-source-map' : 'source-map'
   };

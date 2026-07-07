@@ -1,4 +1,4 @@
-import { SOQuestion } from "../model/types";
+import { SOQuestion } from '../model/types';
 
 interface Props {
   question: SOQuestion;
@@ -8,9 +8,8 @@ const formatDate = (unix: number) =>
   new Date(unix * 1000).toLocaleDateString('ru-RU', {
     day: 'numeric',
     month: 'long',
-    year: 'numeric',
+    year: 'numeric'
   });
-
 
 export const ListItemContent: React.FC<Props> = ({ question }) => (
   <div>

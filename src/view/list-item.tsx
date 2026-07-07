@@ -21,7 +21,14 @@ interface Props {
   moveItem: (dragIndex: number, hoverIndex: number) => void;
 }
 
-export const ListItem: React.FC<Props> = ({ itemId, isOpened, position: index, question, onToggle, moveItem }) => {
+export const ListItem: React.FC<Props> = ({
+  itemId,
+  isOpened,
+  position: index,
+  question,
+  onToggle,
+  moveItem
+}) => {
   const { ref, isDragging, handlerId } = useDragAndDrop(index, itemId, moveItem);
 
   const onUpClickHandle = (e: React.MouseEvent) => {
