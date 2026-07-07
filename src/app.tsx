@@ -1,6 +1,6 @@
-import { Body } from './view/body';
-import { Footer } from './view/footer';
-import { Header } from './view/header';
+import { Body } from './view/layout/body';
+import { Footer } from './view/layout/footer';
+import { Header } from './view/layout/header';
 
 export default function App() {
   return (

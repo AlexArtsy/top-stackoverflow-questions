@@ -1,4 +1,4 @@
-import { SOQuestion } from '../model/types';
+import { SOQuestion } from '../../model/types';
 
 interface Props {
   question: SOQuestion;

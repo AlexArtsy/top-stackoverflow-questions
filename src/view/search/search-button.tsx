@@ -1,5 +1,5 @@
-import { useAppDispatch, useAppSelector } from '../store/store';
-import { fetchQuestions } from '../api/fetch-questions';
+import { useAppDispatch, useAppSelector } from '../../store/store';
+import { fetchQuestions } from '../../api/fetch-questions';
 
 export const SearchButton: React.FC = () => {
   const { fromDate, status } = useAppSelector((state) => state.questions);

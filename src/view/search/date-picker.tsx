@@ -1,5 +1,5 @@
-import { useAppDispatch, useAppSelector } from '../store/store';
-import { setFromDate } from '../store/question-slice';
+import { useAppDispatch, useAppSelector } from '../../store/store';
+import { setFromDate } from '../../store/question-slice';
 import ReactDatePicker from 'react-datepicker';
 
 import 'react-datepicker/dist/react-datepicker.css';

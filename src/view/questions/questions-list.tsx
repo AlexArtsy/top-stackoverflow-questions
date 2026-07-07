@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 import { ListItem } from './list-item';
 import { NoData } from './no-data';
-import { SOQuestion } from '../model/types';
-import { useAppSelector } from '../store/store';
-import { useClickOutside } from '../hooks/use-click-outside';
+import { SOQuestion } from '../../model/types';
+import { useAppSelector } from '../../store/store';
+import { useClickOutside } from '../../hooks/use-click-outside';
 
 export const QuestionsList: React.FC = () => {
   const [items, setItems] = useState<SOQuestion[]>([]);
@@ -39,6 +39,7 @@ export const QuestionsList: React.FC = () => {
         <ListItem
           key={item.question_id}
           itemId={item.question_id}
+          itemCount={items.length}
           isOpened={item.question_id === openedId}
           position={index}
           question={item}

@@ -1,7 +1,8 @@
 import { ListItemContent } from './list-item-content';
-import { ITEM_COUNT, SOQuestion } from '../model/types';
+import { SOQuestion } from '../../model/types';
 import { ButtonPannel } from './button-pannel';
-import { useDragAndDrop } from '../hooks/use-drag-and-drop';
+import { useDragAndDrop } from '../../hooks/use-drag-and-drop';
+import { ITEM_COUNT } from '../../config';
 
 // TODO: на первое время
 const style = {
@@ -14,6 +15,7 @@ const style = {
 
 interface Props {
   itemId: number;
+  itemCount: number;
   isOpened: boolean;
   position: number;
   question: SOQuestion;
@@ -23,6 +25,7 @@ interface Props {
 
 export const ListItem: React.FC<Props> = ({
   itemId,
+  itemCount,
   isOpened,
   position: index,
   question,
@@ -56,6 +59,7 @@ export const ListItem: React.FC<Props> = ({
         {question.title}
         <ButtonPannel
           itemIndex={index}
+          itemCount={itemCount}
           onUpClickHandle={onUpClickHandle}
           onDownClickHandle={onDownClickHandle}
         />

@@ -20,5 +20,3 @@ export const SOApiResponseSchema = z.object({
 
 export type SOQuestion = z.infer<typeof SOQuestionSchema>;
 export type SOApiResponse = z.infer<typeof SOApiResponseSchema>;
-export const ITEM_COUNT = 5;
-export const SEARCH_PHRASE = 'react-redux';
