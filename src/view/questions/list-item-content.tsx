@@ -17,6 +17,9 @@ export const ListItemContent: React.FC<Props> = ({ question }) => (
     <div>Репутация: {question.owner.reputation}</div>
     <div>Просмотры: {question.view_count}</div>
     <div>Последняя активность: {formatDate(question.last_activity_date)}</div>
-    <div dangerouslySetInnerHTML={{ __html: question.body }} />
+    <div>Рейтинг: {question.score}</div>
+    <a href={question.link} target="_blank" rel="noopener noreferrer">
+      Открыть на StackOverflow
+    </a>
   </div>
 );
