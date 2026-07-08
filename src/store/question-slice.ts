@@ -7,13 +7,15 @@ interface QuestionState {
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
   fromDate: number;
+  lastFetchedDate: number;
 }
 
 const initialState: QuestionState = {
   items: [],
   status: 'idle',
   error: null,
-  fromDate: Math.floor(Date.UTC(2026, 0, 1) / 1000)
+  fromDate: Math.floor(Date.UTC(2026, 0, 1) / 1000),
+  lastFetchedDate: 0
 };
 
 const questionsSlice = createSlice({
@@ -22,6 +24,10 @@ const questionsSlice = createSlice({
   reducers: {
     setFromDate(state, action: PayloadAction<number>) {
       state.fromDate = action.payload;
+    },
+    changeScore(state, action: PayloadAction<{ questionId: number; delta: number }>) {
+      const item = state.items.find((q) => q.question_id === action.payload.questionId);
+      if (item) item.score += action.payload.delta;
     }
   },
   extraReducers: (builder) => {
@@ -33,6 +39,7 @@ const questionsSlice = createSlice({
       .addCase(fetchQuestions.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.items = action.payload;
+        state.lastFetchedDate = state.fromDate;
       })
       .addCase(fetchQuestions.rejected, (state, action) => {
         state.status = 'failed';
@@ -41,5 +48,5 @@ const questionsSlice = createSlice({
   }
 });
 
-export const { setFromDate } = questionsSlice.actions;
+export const { setFromDate, changeScore } = questionsSlice.actions;
 export default questionsSlice.reducer;

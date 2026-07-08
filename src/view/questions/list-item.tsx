@@ -3,6 +3,7 @@ import { SOQuestion } from '../../model/types';
 import { ButtonPannel } from './button-pannel';
 import { useDragAndDrop } from '../../hooks/use-drag-and-drop';
 import { Box, Collapse, Paper, Typography } from '@mui/material';
+import { useClickHandler } from '../../hooks/use-click-handler';
 
 interface Props {
   itemId: number;
@@ -10,33 +11,35 @@ interface Props {
   isOpened: boolean;
   position: number;
   question: SOQuestion;
+  isSwapSelected: boolean;
   onToggle: () => void;
   moveItem: (dragIndex: number, hoverIndex: number) => void;
+  onChangeScore: (questionId: number, delta: number) => void;
+  onDoubleClick: (questionId: number) => void;
 }
 
 export const ListItem: React.FC<Props> = ({
   itemId,
-  itemCount,
   isOpened,
   position,
   question,
+  isSwapSelected,
   onToggle,
-  moveItem
+  moveItem,
+  onChangeScore,
+  onDoubleClick
 }) => {
   const { ref, isDragging, handlerId } = useDragAndDrop(position, itemId, moveItem);
+  const { handleClick, handleDoubleClick } = useClickHandler(onToggle, () => onDoubleClick(itemId));
 
   const onUpClickHandle = (e: React.MouseEvent) => {
-    if (position === 0) return;
-
     e.stopPropagation();
-    moveItem(position, position - 1);
+    onChangeScore(itemId, 1);
   };
 
   const onDownClickHandle = (e: React.MouseEvent) => {
-    if (position === itemCount - 1) return;
-
     e.stopPropagation();
-    moveItem(position, position + 1);
+    onChangeScore(itemId, -1);
   };
 
   return (
@@ -48,11 +51,13 @@ export const ListItem: React.FC<Props> = ({
         mb: 1,
         opacity: isDragging ? 0 : 1,
         cursor: 'move',
-        ...(question.is_answered && { bgcolor: '#e8f5e9' })
+        ...(question.is_answered && { bgcolor: '#e8f5e9' }),
+        ...(isSwapSelected && { borderColor: 'orange', borderWidth: '2px' })
       }}
 
       data-handler-id={handlerId}
-      onClick={onToggle}
+      onClick={handleClick}
+      onDoubleClick={handleDoubleClick}
     >
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Typography variant="subtitle1">{question.title}</Typography>
@@ -72,12 +77,7 @@ export const ListItem: React.FC<Props> = ({
           >
             {question.score}
           </Typography>
-          <ButtonPannel
-            itemIndex={position}
-            itemCount={itemCount}
-            onUpClickHandle={onUpClickHandle}
-            onDownClickHandle={onDownClickHandle}
-          />
+          <ButtonPannel onUpClickHandle={onUpClickHandle} onDownClickHandle={onDownClickHandle} />
         </Box>
       </Box>
       <Collapse in={isOpened}>
