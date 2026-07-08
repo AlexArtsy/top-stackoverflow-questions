@@ -1,6 +1,6 @@
 import { ListItemContent } from './list-item-content';
 import { SOQuestion } from '../../model/types';
-import { ButtonPannel } from './button-pannel';
+import { ScoreControls } from './score-controls';
 import { useDragAndDrop } from '../../hooks/use-drag-and-drop';
 import { Box, Collapse, Paper, Typography } from '@mui/material';
 import { useClickHandler } from '../../hooks/use-click-handler';
@@ -76,7 +76,7 @@ export const ListItem: React.FC<Props> = ({
           >
             {question.score}
           </Typography>
-          <ButtonPannel onUpClickHandle={onUpClickHandle} onDownClickHandle={onDownClickHandle} />
+          <ScoreControls onUpClickHandle={onUpClickHandle} onDownClickHandle={onDownClickHandle} />
         </Box>
       </Box>
       <Collapse in={isOpened}>
