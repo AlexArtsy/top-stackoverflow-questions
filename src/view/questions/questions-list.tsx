@@ -9,7 +9,7 @@ import { useQuestionsList } from '../../hooks/use-questions-list';
 export const QuestionsList: React.FC = () => {
   const [openedId, setOpenedId] = useState<number | null>(null);
   const { items, status, error, scoreChangeHandler, moveItem, swapItems } = useQuestionsList();
-  const { swapItemId, handleDoubleClick, clearSelection } = useDoubleClickSwap(items, swapItems);
+  const { selectedId, handleDoubleClick, clearSelection } = useDoubleClickSwap(items, (item) => item.question_id, swapItems);
 
   const containerRef = useClickOutside(() => {
     setOpenedId(null);
@@ -44,7 +44,7 @@ export const QuestionsList: React.FC = () => {
           }
           moveItem={moveItem}
           onChangeScore={scoreChangeHandler}
-          isSwapSelected={item.question_id === swapItemId}
+          isSwapSelected={item.question_id === selectedId}
           onDoubleClick={handleDoubleClick}
         />
       ))}

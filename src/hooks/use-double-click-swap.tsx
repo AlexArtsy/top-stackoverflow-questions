@@ -1,22 +1,24 @@
+import { useState } from 'react';
 
-import { useState } from "react";
-import { SOQuestion } from "../model/types";
+export function useDoubleClickSwap<T>(
+  items: T[],
+  getId: (item: T) => number,
+  onSwap: (fromIndex: number, toIndex: number) => void,
+) {
+  const [selectedId, setSelectedId] = useState<number | null>(null);
 
-export const useDoubleClickSwap = (items: SOQuestion[], onSwap: (a: number, b: number) => void) => {
-const [swapItemId, setSwapItemId] = useState<number | null>(null);
-
-  const handleDoubleClick = (questionId: number) => {
-    if (swapItemId === null) {
-      setSwapItemId(questionId);
-    } else if (swapItemId === questionId) {
-      setSwapItemId(null);
+  const handleDoubleClick = (id: number) => {
+    if (selectedId === null) {
+      setSelectedId(id);
+    } else if (selectedId === id) {
+      setSelectedId(null);
     } else {
-      const a = items.findIndex((q) => q.question_id === swapItemId);
-      const b = items.findIndex((q) => q.question_id === questionId);
-      onSwap(a, b);
-      setSwapItemId(null);
+      const fromIndex = items.findIndex((item) => getId(item) === selectedId);
+      const toIndex = items.findIndex((item) => getId(item) === id);
+      onSwap(fromIndex, toIndex);
+      setSelectedId(null);
     }
   };
 
-  return { swapItemId, handleDoubleClick, clearSelection: () => setSwapItemId(null) };
-};
+  return { selectedId, handleDoubleClick, clearSelection: () => setSelectedId(null) };
+}
