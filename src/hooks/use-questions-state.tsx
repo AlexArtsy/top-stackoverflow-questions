@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { fetchQuestions } from '../api/fetch-questions';
-import type { SOQuestion } from '../model/types';
+import type { SOQuestion } from '../types/question';
 
 export function useQuestionsState() {
   const dispatch = useAppDispatch();

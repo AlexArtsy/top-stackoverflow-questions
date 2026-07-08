@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { SOApiResponseSchema, SOQuestion } from '../model/types';
-import { ITEM_COUNT, SEARCH_PHRASE } from '../config';
+import { SOApiResponseSchema, SOQuestion } from '../types/question';
+import { ITEM_COUNT, SEARCH_PHRASE } from '../constants';
 
 export const fetchQuestions = createAsyncThunk<SOQuestion[], number>(
   'questions/fetchQuestions',

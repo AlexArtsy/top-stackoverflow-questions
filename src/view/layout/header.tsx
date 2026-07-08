@@ -1,7 +1,7 @@
 import { Box, Divider, Typography } from '@mui/material';
-import { SEARCH_PHRASE } from '../../config';
+import { SEARCH_PHRASE } from '../../constants';
 import { DatePicker } from '../search/date-picker';
-import { SearchButton } from '../search/search-button';
+import { SearchButton } from '../search/button';
 
 const headerRowSx = {
   display: 'flex',

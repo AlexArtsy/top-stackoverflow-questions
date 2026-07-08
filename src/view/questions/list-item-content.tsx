@@ -1,5 +1,5 @@
 import { Box, Link, Typography } from '@mui/material';
-import { SOQuestion } from '../../model/types';
+import { SOQuestion } from '../../types/question';
 
 interface Props {
   question: SOQuestion;

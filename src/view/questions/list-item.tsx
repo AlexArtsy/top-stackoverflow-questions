@@ -1,5 +1,5 @@
 import { ListItemContent } from './list-item-content';
-import { SOQuestion } from '../../model/types';
+import { SOQuestion } from '../../types/question';
 import { ScoreControls } from './score-controls';
 import { useDragAndDrop } from '../../hooks/use-drag-and-drop';
 import { Box, Collapse, Paper, Typography } from '@mui/material';

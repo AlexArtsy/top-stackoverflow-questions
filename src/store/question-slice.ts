@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { SOQuestion } from '../model/types';
+import { SOQuestion } from '../types/question';
 import { fetchQuestions } from '../api/fetch-questions';
 
 interface QuestionState {
