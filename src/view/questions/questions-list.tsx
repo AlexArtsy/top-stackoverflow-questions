@@ -6,6 +6,12 @@ import { Alert, Box, CircularProgress, Typography } from '@mui/material';
 import { useDoubleClickSwap } from '../../hooks/use-double-click-swap';
 import { useQuestionsList } from '../../hooks/use-questions-list';
 
+const loadingBoxSx = {
+  display: 'flex',
+  alignItems: 'center',
+  gap: 2,
+};
+
 export const QuestionsList: React.FC = () => {
   const [openedId, setOpenedId] = useState<number | null>(null);
   const { items, status, error, scoreChangeHandler, moveItem, swapItems } = useQuestionsList();
@@ -18,7 +24,7 @@ export const QuestionsList: React.FC = () => {
 
   if (status === 'loading') {
     return (
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+      <Box sx={loadingBoxSx}>
         <CircularProgress size={24} />
         <Typography>Загрузка...</Typography>
       </Box>
