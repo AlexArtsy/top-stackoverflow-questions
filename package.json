@@ -1,0 +1,72 @@
+{
+  "name": "top-stackoverflow-questions",
+  "version": "1.0.0",
+  "description": "Тестовое задание",
+  "homepage": "https://github.com/AlexArtsy/top-stackoverflow-questions#readme",
+  "bugs": {
+    "url": "https://github.com/AlexArtsy/top-stackoverflow-questions/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexArtsy/top-stackoverflow-questions.git"
+  },
+  "license": "MIT",
+  "author": "AlexArts",
+  "type": "module",
+  "main": "src/index.tsx",
+  "scripts": {
+    "start": "webpack serve --mode development",
+    "build": "webpack --mode production",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "doctor": "npx react-doctor@latest"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^9.2.0",
+    "@mui/material": "^9.2.0",
+    "@mui/x-date-pickers": "^9.8.0",
+    "@reduxjs/toolkit": "^2.12.0",
+    "dayjs": "^1.11.21",
+    "dnd-core": "^16.0.1",
+    "react": "^19.2.7",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
+    "react-dom": "^19.2.7",
+    "react-redux": "^9.3.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.15.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "css-loader": "^7.1.4",
+    "eslint": "^9.15.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react": "^7.37.3",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-unicorn": "^56.0.1",
+    "globals": "^15.14.0",
+    "html-webpack-plugin": "^5.6.3",
+    "jiti": "^2.7.0",
+    "jsdom": "^29.1.1",
+    "prettier": "^3.4.2",
+    "react-doctor": "^0.7.2",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.18.2",
+    "vitest": "^4.1.10",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.0"
+  }
+}
