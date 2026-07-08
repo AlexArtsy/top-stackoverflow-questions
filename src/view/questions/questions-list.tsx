@@ -64,19 +64,21 @@ export const QuestionsList: React.FC = () => {
     <NoData />
   ) : (
     <div ref={containerRef}>
-      {items.map((item, index) => (
+      {items.map((question, index) => (
         <ListItem
-          key={item.question_id}
-          itemId={item.question_id}
-          isOpened={item.question_id === openedId}
-          position={index}
-          question={item}
+          key={question.question_id}
+          item={{
+            id: question.question_id,
+            index,
+            question,
+            isOpened: question.question_id === openedId,
+            isSwapSelected: question.question_id === selectedId,
+          }}
           onToggle={() =>
-            setOpenedId((prev) => (prev === item.question_id ? null : item.question_id))
+            setOpenedId((prev) => (prev === question.question_id ? null : question.question_id))
           }
           moveItem={moveItem}
           onChangeScore={handleChangeScore}
-          isSwapSelected={item.question_id === selectedId}
           onDoubleClick={handleDoubleClick}
         />
       ))}

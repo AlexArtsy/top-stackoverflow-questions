@@ -5,6 +5,15 @@ import { useDragAndDrop } from '../../hooks/use-drag-and-drop';
 import { Box, Collapse, Paper, Typography } from '@mui/material';
 import { useClickHandler } from '../../hooks/use-click-handler';
 
+const paperSx = (isDragging: boolean, isAnswered: boolean, isSwapSelected: boolean) => ({
+  p: 1.5,
+  mb: 1,
+  cursor: 'move',
+  opacity: isDragging ? 0 : 1,
+  ...(isAnswered && { bgcolor: '#e8f5e9' }),
+  ...(isSwapSelected && { borderColor: 'orange', borderWidth: '2px' }),
+});
+
 const scoreBadgeSx = {
   border: '1px solid',
   borderColor: 'grey.300',
@@ -17,11 +26,13 @@ const scoreBadgeSx = {
 };
 
 interface Props {
-  itemId: number;
-  isOpened: boolean;
-  position: number;
-  question: SOQuestion;
-  isSwapSelected: boolean;
+  item: {
+    id: number;
+    index: number;
+    question: SOQuestion;
+    isOpened: boolean;
+    isSwapSelected: boolean;
+  };
   onToggle: () => void;
   moveItem: (dragIndex: number, hoverIndex: number) => void;
   onChangeScore: (questionId: number, delta: number) => void;
@@ -29,42 +40,30 @@ interface Props {
 }
 
 export const ListItem: React.FC<Props> = ({
-  itemId,
-  isOpened,
-  position,
-  question,
-  isSwapSelected,
+  item: { id, index, question, isOpened, isSwapSelected },
   onToggle,
   moveItem,
   onChangeScore,
-  onDoubleClick
+  onDoubleClick,
 }) => {
-  const { ref, isDragging, handlerId } = useDragAndDrop(position, itemId, moveItem);
-  const { handleClick, handleDoubleClick } = useClickHandler(onToggle, () => onDoubleClick(itemId));
+  const { ref, isDragging, handlerId } = useDragAndDrop(index, id, moveItem);
+  const { handleClick, handleDoubleClick } = useClickHandler(onToggle, () => onDoubleClick(id));
 
   const onUpClickHandle = (e: React.MouseEvent) => {
     e.stopPropagation();
-    onChangeScore(itemId, 1);
+    onChangeScore(id, 1);
   };
 
   const onDownClickHandle = (e: React.MouseEvent) => {
     e.stopPropagation();
-    onChangeScore(itemId, -1);
+    onChangeScore(id, -1);
   };
 
   return (
     <Paper
       ref={ref}
       variant="outlined"
-      sx={{
-        p: 1.5,
-        mb: 1,
-        opacity: isDragging ? 0 : 1,
-        cursor: 'move',
-        ...(question.is_answered && { bgcolor: '#e8f5e9' }),
-        ...(isSwapSelected && { borderColor: 'orange', borderWidth: '2px' })
-      }}
-
+      sx={paperSx(isDragging, question.is_answered, isSwapSelected)}
       data-handler-id={handlerId}
       onClick={handleClick}
       onDoubleClick={handleDoubleClick}
