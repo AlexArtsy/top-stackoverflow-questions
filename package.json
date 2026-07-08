@@ -23,7 +23,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "doctor": "npx react-doctor@latest"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -39,7 +40,6 @@
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^19.2.7",
     "react-redux": "^9.3.0",
-    "redux-thunk": "^3.1.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
@@ -59,6 +59,7 @@
     "jiti": "^2.7.0",
     "jsdom": "^29.1.1",
     "prettier": "^3.4.2",
+    "react-doctor": "^0.7.2",
     "style-loader": "^4.0.0",
     "ts-loader": "^9.5.1",
     "typescript": "^5.7.2",

@@ -21,7 +21,7 @@ export const QuestionsList: React.FC = () => {
 
   const handleToggle = useCallback((questionId: number) => {
     setOpenedId((prev) => (prev === questionId ? null : questionId));
-  }, []);
+  }, [setOpenedId]);
 
   const handleChangeScore = useCallback(
     (questionId: number, delta: number) => {
@@ -30,7 +30,7 @@ export const QuestionsList: React.FC = () => {
         prev.map((q) => (q.question_id === questionId ? { ...q, score: q.score + delta } : q))
       );
     },
-    [dispatch]
+    [dispatch, setItems]
   );
 
   const moveItem = useCallback((dragIndex: number, hoverIndex: number) => {
@@ -38,7 +38,7 @@ export const QuestionsList: React.FC = () => {
       const item = prev[dragIndex];
       return prev.toSpliced(dragIndex, 1).toSpliced(hoverIndex, 0, item);
     });
-  }, []);
+  },     [setItems]);
 
   const swapItems = useCallback((a: number, b: number) => {
     setItems((prev) => {
@@ -46,7 +46,7 @@ export const QuestionsList: React.FC = () => {
       [next[a], next[b]] = [next[b], next[a]];
       return next;
     });
-  }, []);
+  },     [setItems]);
 
   const { selectedId, handleDoubleClick, clearSelection } = useDoubleClickSwap(
     items,
