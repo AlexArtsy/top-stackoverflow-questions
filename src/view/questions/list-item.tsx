@@ -9,8 +9,9 @@ const paperSx = (isDragging: boolean, isAnswered: boolean, isSwapSelected: boole
   p: 1.5,
   mb: 1,
   cursor: 'move',
-  opacity: isDragging ? 0 : 1,
-  ...(isAnswered && { bgcolor: '#e8f5e9' }),
+  opacity: isDragging ? 0.4 : 1,
+  ...(isDragging && { borderStyle: 'dashed' }),
+  ...(isAnswered && !isDragging && { bgcolor: '#e8f5e9' }),
   ...(isSwapSelected && { borderColor: 'orange', borderWidth: '2px' })
 });
 

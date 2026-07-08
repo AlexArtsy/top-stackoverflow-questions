@@ -2,6 +2,8 @@
 
 Веб-приложение для отображения 5 самых популярных вопросов с StackOverflow, содержащих `"react-redux"` в заголовке, начиная с выбранной пользователем даты.
 
+[![Maintainability](https://qlty.sh/badges/97e6950e-5ebe-4f17-bf84-7b68313edeca/maintainability.svg)](https://qlty.sh/gh/AlexArtsy/projects/top-stackoverflow-questions)
+
 ## Функциональные возможности
 
 - Автоматическая загрузка данных при старте (дата по умолчанию — 01.01.2026)
