@@ -12,7 +12,7 @@ const question = (id: number, score: number): SOQuestion => ({
   owner: { display_name: 'User', reputation: 100 },
   view_count: 500,
   last_activity_date: 1700000000,
-  is_answered: false,
+  is_answered: false
 });
 
 const q1 = question(1, 5);
@@ -31,7 +31,7 @@ describe('question-slice', () => {
     it('увеличивает score на 1', () => {
       const state = reducer(
         { items: [q1, q2] } as ReturnType<typeof reducer>,
-        changeScore({ questionId: 1, delta: 1 }),
+        changeScore({ questionId: 1, delta: 1 })
       );
       expect(state.items[0].score).toBe(6);
       expect(state.items[1].score).toBe(10);
@@ -40,7 +40,7 @@ describe('question-slice', () => {
     it('уменьшает score на 1', () => {
       const state = reducer(
         { items: [q1, q2] } as ReturnType<typeof reducer>,
-        changeScore({ questionId: 2, delta: -1 }),
+        changeScore({ questionId: 2, delta: -1 })
       );
       expect(state.items[1].score).toBe(9);
     });
@@ -48,7 +48,7 @@ describe('question-slice', () => {
     it('не падает при несуществующем question_id', () => {
       const state = reducer(
         { items: [q1] } as ReturnType<typeof reducer>,
-        changeScore({ questionId: 999, delta: 1 }),
+        changeScore({ questionId: 999, delta: 1 })
       );
       expect(state.items[0].score).toBe(5);
     });
@@ -58,7 +58,7 @@ describe('question-slice', () => {
     it('pending — переводит статус в loading и сбрасывает ошибку', () => {
       const state = reducer(
         { status: 'idle', error: 'старая ошибка' } as ReturnType<typeof reducer>,
-        { type: fetchQuestions.pending.type },
+        { type: fetchQuestions.pending.type }
       );
       expect(state.status).toBe('loading');
       expect(state.error).toBeNull();
@@ -68,7 +68,7 @@ describe('question-slice', () => {
       const items = [q1, q2, q3];
       const state = reducer(
         { status: 'loading', fromDate: 123, lastFetchedDate: 0 } as ReturnType<typeof reducer>,
-        fetchQuestions.fulfilled(items, '', 123),
+        fetchQuestions.fulfilled(items, '', 123)
       );
       expect(state.status).toBe('succeeded');
       expect(state.items).toEqual(items);
@@ -78,7 +78,7 @@ describe('question-slice', () => {
     it('rejected — ставит статус failed и записывает ошибку', () => {
       const state = reducer(
         { status: 'loading' } as ReturnType<typeof reducer>,
-        fetchQuestions.rejected(new Error('сетевая ошибка'), '', 0, 'сетевая ошибка'),
+        fetchQuestions.rejected(new Error('сетевая ошибка'), '', 0, 'сетевая ошибка')
       );
       expect(state.status).toBe('failed');
       expect(state.error).toBe('сетевая ошибка');

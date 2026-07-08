@@ -8,19 +8,19 @@ const headerRowSx = {
   flexWrap: 'wrap',
   alignItems: 'center',
   gap: 1,
-  mb: 2,
+  mb: 2
 };
 
 const headerTitleSx = {
   flex: '1 1 auto',
-  minWidth: 200,
+  minWidth: 200
 };
 
 const controlsRowSx = {
   display: 'flex',
   gap: 1,
   alignItems: 'center',
-  flexShrink: 0,
+  flexShrink: 0
 };
 
 export const Header: React.FC = () => {

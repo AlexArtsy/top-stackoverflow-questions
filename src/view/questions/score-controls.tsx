@@ -4,17 +4,15 @@ import RemoveIcon from '@mui/icons-material/Remove';
 
 const controlsWrapperSx = {
   display: 'flex',
-  flexShrink: 0,
+  flexShrink: 0
 };
 
 interface Props {
   onUpClickHandle: (e: React.MouseEvent) => void;
   onDownClickHandle: (e: React.MouseEvent) => void;
 }
-export const ScoreControls: React.FC<Props> = ({
-  onUpClickHandle,
-  onDownClickHandle
-}) => {
+
+export const ScoreControls: React.FC<Props> = ({ onUpClickHandle, onDownClickHandle }) => {
   return (
     <Box sx={controlsWrapperSx} onDoubleClick={(e) => e.stopPropagation()}>
       <IconButton onClick={onUpClickHandle} size="small">

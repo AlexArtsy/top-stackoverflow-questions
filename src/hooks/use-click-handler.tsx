@@ -1,17 +1,17 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 
-export const useClickHandler = (
-  onSingleClick: () => void,
-  onDoubleClick: () => void,
-) => {
+export const useClickHandler = (onSingleClick: () => void, onDoubleClick: () => void) => {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useEffect(() => () => {
-    if (timerRef.current) clearTimeout(timerRef.current);
-  }, []);
+  useEffect(
+    () => () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    },
+    []
+  );
 
   const handleClick = () => {
-    if (timerRef.current) clearTimeout(timerRef.current); 
+    if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = setTimeout(onSingleClick, 250);
   };
 

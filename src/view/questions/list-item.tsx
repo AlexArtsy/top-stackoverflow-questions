@@ -11,7 +11,7 @@ const paperSx = (isDragging: boolean, isAnswered: boolean, isSwapSelected: boole
   cursor: 'move',
   opacity: isDragging ? 0 : 1,
   ...(isAnswered && { bgcolor: '#e8f5e9' }),
-  ...(isSwapSelected && { borderColor: 'orange', borderWidth: '2px' }),
+  ...(isSwapSelected && { borderColor: 'orange', borderWidth: '2px' })
 });
 
 const scoreBadgeSx = {
@@ -22,7 +22,7 @@ const scoreBadgeSx = {
   py: 0.5,
   minWidth: 32,
   textAlign: 'center',
-  fontWeight: 'bold',
+  fontWeight: 'bold'
 };
 
 interface Props {
@@ -33,7 +33,7 @@ interface Props {
     isOpened: boolean;
     isSwapSelected: boolean;
   };
-  onToggle: () => void;
+  onToggle: (id: number) => void;
   moveItem: (dragIndex: number, hoverIndex: number) => void;
   onChangeScore: (questionId: number, delta: number) => void;
   onDoubleClick: (questionId: number) => void;
@@ -44,10 +44,13 @@ export const ListItem: React.FC<Props> = ({
   onToggle,
   moveItem,
   onChangeScore,
-  onDoubleClick,
+  onDoubleClick
 }) => {
   const { ref, isDragging, handlerId } = useDragAndDrop(index, id, moveItem);
-  const { handleClick, handleDoubleClick } = useClickHandler(onToggle, () => onDoubleClick(id));
+  const { handleClick, handleDoubleClick } = useClickHandler(
+    () => onToggle(id),
+    () => onDoubleClick(id)
+  );
 
   const onUpClickHandle = (e: React.MouseEvent) => {
     e.stopPropagation();

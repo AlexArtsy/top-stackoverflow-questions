@@ -3,7 +3,7 @@ import { useState } from 'react';
 export function useDoubleClickSwap<T>(
   items: T[],
   getId: (item: T) => number,
-  onSwap: (fromIndex: number, toIndex: number) => void,
+  onSwap: (fromIndex: number, toIndex: number) => void
 ) {
   const [selectedId, setSelectedId] = useState<number | null>(null);
 

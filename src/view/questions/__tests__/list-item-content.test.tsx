@@ -14,7 +14,7 @@ const question: SOQuestion = {
   owner: { display_name: 'John', reputation: 1500 },
   view_count: 1000,
   last_activity_date: 1700000000,
-  is_answered: true,
+  is_answered: true
 };
 
 describe('ListItemContent', () => {

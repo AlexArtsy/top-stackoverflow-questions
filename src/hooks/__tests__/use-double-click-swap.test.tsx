@@ -14,7 +14,7 @@ describe('useDoubleClickSwap', () => {
   const items: Item[] = [
     { id: 10, name: 'A' },
     { id: 20, name: 'B' },
-    { id: 30, name: 'C' },
+    { id: 30, name: 'C' }
   ];
   const getId = (item: Item) => item.id;
   const onSwap = vi.fn();

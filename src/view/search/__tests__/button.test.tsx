@@ -11,7 +11,7 @@ import type { RootState } from '../../../store/store';
 function renderWithProvider(preloadedState: Partial<RootState>) {
   const store = configureStore({
     reducer: { questions: questionsReducer },
-    preloadedState,
+    preloadedState
   });
 
   return {
@@ -19,15 +19,15 @@ function renderWithProvider(preloadedState: Partial<RootState>) {
     ...render(
       <Provider store={store}>
         <SearchButton />
-      </Provider>,
-    ),
+      </Provider>
+    )
   };
 }
 
 const initial = {
   fromDate: 100,
   lastFetchedDate: 0,
-  status: 'idle',
+  status: 'idle'
 } as const;
 
 describe('SearchButton', () => {
@@ -36,8 +36,8 @@ describe('SearchButton', () => {
       questions: {
         ...initial,
         items: [],
-        error: null,
-      } as RootState['questions'],
+        error: null
+      } as RootState['questions']
     });
 
     expect(screen.getByRole('button', { name: 'Поиск' })).toBeInTheDocument();
@@ -51,8 +51,8 @@ describe('SearchButton', () => {
         lastFetchedDate: 100,
         status: 'succeeded',
         items: [],
-        error: null,
-      } as RootState['questions'],
+        error: null
+      } as RootState['questions']
     });
 
     expect(screen.queryByRole('button')).toBeNull();
@@ -66,8 +66,8 @@ describe('SearchButton', () => {
         lastFetchedDate: 100,
         status: 'loading',
         items: [],
-        error: null,
-      } as RootState['questions'],
+        error: null
+      } as RootState['questions']
     });
 
     expect(screen.getByRole('button', { name: 'Поиск' })).toBeInTheDocument();

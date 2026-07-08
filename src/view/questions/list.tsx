@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { ListItem } from './list-item';
 import { NoData } from './no-data';
 import { useClickOutside } from '../../hooks/use-click-outside';
@@ -11,7 +11,7 @@ import { changeScore } from '../../store/question-slice';
 const loadingBoxSx = {
   display: 'flex',
   alignItems: 'center',
-  gap: 2,
+  gap: 2
 };
 
 export const QuestionsList: React.FC = () => {
@@ -19,29 +19,40 @@ export const QuestionsList: React.FC = () => {
   const dispatch = useAppDispatch();
   const { items, status, error, setItems } = useQuestionsState();
 
-  const handleChangeScore = (questionId: number, delta: number) => {
-    dispatch(changeScore({ questionId, delta }));
-    setItems((prev) =>
-      prev.map((q) => (q.question_id === questionId ? { ...q, score: q.score + delta } : q))
-    );
-  };
+  const handleToggle = useCallback((questionId: number) => {
+    setOpenedId((prev) => (prev === questionId ? null : questionId));
+  }, []);
 
-  const moveItem = (dragIndex: number, hoverIndex: number) => {
+  const handleChangeScore = useCallback(
+    (questionId: number, delta: number) => {
+      dispatch(changeScore({ questionId, delta }));
+      setItems((prev) =>
+        prev.map((q) => (q.question_id === questionId ? { ...q, score: q.score + delta } : q))
+      );
+    },
+    [dispatch]
+  );
+
+  const moveItem = useCallback((dragIndex: number, hoverIndex: number) => {
     setItems((prev) => {
       const item = prev[dragIndex];
       return prev.toSpliced(dragIndex, 1).toSpliced(hoverIndex, 0, item);
     });
-  };
+  }, []);
 
-  const swapItems = (a: number, b: number) => {
+  const swapItems = useCallback((a: number, b: number) => {
     setItems((prev) => {
       const next = [...prev];
       [next[a], next[b]] = [next[b], next[a]];
       return next;
     });
-  };
+  }, []);
 
-  const { selectedId, handleDoubleClick, clearSelection } = useDoubleClickSwap(items, (item) => item.question_id, swapItems);
+  const { selectedId, handleDoubleClick, clearSelection } = useDoubleClickSwap(
+    items,
+    (item) => item.question_id,
+    swapItems
+  );
 
   const containerRef = useClickOutside(() => {
     setOpenedId(null);
@@ -72,11 +83,9 @@ export const QuestionsList: React.FC = () => {
             index,
             question,
             isOpened: question.question_id === openedId,
-            isSwapSelected: question.question_id === selectedId,
+            isSwapSelected: question.question_id === selectedId
           }}
-          onToggle={() =>
-            setOpenedId((prev) => (prev === question.question_id ? null : question.question_id))
-          }
+          onToggle={handleToggle}
           moveItem={moveItem}
           onChangeScore={handleChangeScore}
           onDoubleClick={handleDoubleClick}
