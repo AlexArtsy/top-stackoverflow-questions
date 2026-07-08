@@ -4,7 +4,9 @@ import { NoData } from './no-data';
 import { useClickOutside } from '../../hooks/use-click-outside';
 import { Alert, Box, CircularProgress, Typography } from '@mui/material';
 import { useDoubleClickSwap } from '../../hooks/use-double-click-swap';
-import { useQuestionsList } from '../../hooks/use-questions-list';
+import { useQuestionsState } from '../../hooks/use-questions-state';
+import { useAppDispatch } from '../../store/store';
+import { changeScore } from '../../store/question-slice';
 
 const loadingBoxSx = {
   display: 'flex',
@@ -14,7 +16,31 @@ const loadingBoxSx = {
 
 export const QuestionsList: React.FC = () => {
   const [openedId, setOpenedId] = useState<number | null>(null);
-  const { items, status, error, scoreChangeHandler, moveItem, swapItems } = useQuestionsList();
+  const dispatch = useAppDispatch();
+  const { items, status, error, setItems } = useQuestionsState();
+
+  const handleChangeScore = (questionId: number, delta: number) => {
+    dispatch(changeScore({ questionId, delta }));
+    setItems((prev) =>
+      prev.map((q) => (q.question_id === questionId ? { ...q, score: q.score + delta } : q))
+    );
+  };
+
+  const moveItem = (dragIndex: number, hoverIndex: number) => {
+    setItems((prev) => {
+      const item = prev[dragIndex];
+      return prev.toSpliced(dragIndex, 1).toSpliced(hoverIndex, 0, item);
+    });
+  };
+
+  const swapItems = (a: number, b: number) => {
+    setItems((prev) => {
+      const next = [...prev];
+      [next[a], next[b]] = [next[b], next[a]];
+      return next;
+    });
+  };
+
   const { selectedId, handleDoubleClick, clearSelection } = useDoubleClickSwap(items, (item) => item.question_id, swapItems);
 
   const containerRef = useClickOutside(() => {
@@ -49,7 +75,7 @@ export const QuestionsList: React.FC = () => {
             setOpenedId((prev) => (prev === item.question_id ? null : item.question_id))
           }
           moveItem={moveItem}
-          onChangeScore={scoreChangeHandler}
+          onChangeScore={handleChangeScore}
           isSwapSelected={item.question_id === selectedId}
           onDoubleClick={handleDoubleClick}
         />
