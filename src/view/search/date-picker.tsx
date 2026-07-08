@@ -16,6 +16,7 @@ export const DatePicker: React.FC = () => {
       onChange={(newValue) => {
         dispatch(setFromDate(newValue ? newValue.unix() : 0));
       }}
+      slotProps={{ textField: { size: 'small' } }}
     />
   );
 };

@@ -4,6 +4,7 @@ import { NoData } from './no-data';
 import { SOQuestion } from '../../model/types';
 import { useAppSelector } from '../../store/store';
 import { useClickOutside } from '../../hooks/use-click-outside';
+import { Alert, Box, CircularProgress, Typography } from '@mui/material';
 
 export const QuestionsList: React.FC = () => {
   const [items, setItems] = useState<SOQuestion[]>([]);
@@ -26,10 +27,20 @@ export const QuestionsList: React.FC = () => {
     });
   }, []);
 
-  if (status === 'idle') return <div>Выберите дату и нажмите "Поиск"</div>;
-  if (status === 'loading') return <div>Загрузка...</div>;
-  if (status === 'failed') return <div>Ошибка: {error}</div>;
-  if (status === 'succeeded' && items.length === 0) return <NoData />;
+  if (status === 'idle') {
+    return <Alert severity="info">Выберите дату и нажмите "Поиск"</Alert>;
+  }
+  if (status === 'loading') {
+    return (
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+        <CircularProgress size={24} />
+        <Typography>Загрузка...</Typography>
+      </Box>
+    );
+  }
+  if (status === 'failed') {
+    return <Alert severity="error">Ошибка: {error}</Alert>;
+  }
 
   return items.length === 0 ? (
     <NoData />

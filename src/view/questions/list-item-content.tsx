@@ -1,3 +1,4 @@
+import { Box, Link, Typography } from '@mui/material';
 import { SOQuestion } from '../../model/types';
 
 interface Props {
@@ -12,14 +13,16 @@ const formatDate = (unix: number) =>
   });
 
 export const ListItemContent: React.FC<Props> = ({ question }) => (
-  <div>
-    <div>Автор: {question.owner.display_name}</div>
-    <div>Репутация: {question.owner.reputation}</div>
-    <div>Просмотры: {question.view_count}</div>
-    <div>Последняя активность: {formatDate(question.last_activity_date)}</div>
-    <div>Рейтинг: {question.score}</div>
-    <a href={question.link} target="_blank" rel="noopener noreferrer">
+  <Box sx={{ mt: 1 }}>
+    <Typography variant="body2">Автор: {question.owner.display_name}</Typography>
+    <Typography variant="body2">Репутация: {question.owner.reputation}</Typography>
+    <Typography variant="body2">Просмотры: {question.view_count}</Typography>
+    <Typography variant="body2">
+      Последняя активность: {formatDate(question.last_activity_date)}
+    </Typography>
+    <Typography variant="body2">Рейтинг: {question.score}</Typography>
+    <Link href={question.link} target="_blank" rel="noopener noreferrer">
       Открыть на StackOverflow
-    </a>
-  </div>
+    </Link>
+  </Box>
 );

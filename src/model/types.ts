@@ -11,7 +11,8 @@ export const SOQuestionSchema = z.object({
     reputation: z.number()
   }),
   view_count: z.number(),
-  last_activity_date: z.number()
+  last_activity_date: z.number(),
+  is_answered: z.boolean()
 });
 
 export const SOApiResponseSchema = z.object({

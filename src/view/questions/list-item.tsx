@@ -2,15 +2,7 @@ import { ListItemContent } from './list-item-content';
 import { SOQuestion } from '../../model/types';
 import { ButtonPannel } from './button-pannel';
 import { useDragAndDrop } from '../../hooks/use-drag-and-drop';
-
-// TODO: на первое время
-const style = {
-  border: '1px dashed gray',
-  padding: '0.5rem 1rem',
-  marginBottom: '.5rem',
-  backgroundColor: 'white',
-  cursor: 'move'
-};
+import { Box, Collapse, Paper, Typography } from '@mui/material';
 
 interface Props {
   itemId: number;
@@ -26,44 +18,71 @@ export const ListItem: React.FC<Props> = ({
   itemId,
   itemCount,
   isOpened,
-  position: index,
+  position,
   question,
   onToggle,
   moveItem
 }) => {
-  const { ref, isDragging, handlerId } = useDragAndDrop(index, itemId, moveItem);
+  const { ref, isDragging, handlerId } = useDragAndDrop(position, itemId, moveItem);
 
   const onUpClickHandle = (e: React.MouseEvent) => {
-    if (index === 0) return;
+    if (position === 0) return;
 
     e.stopPropagation();
-    moveItem(index, index - 1);
+    moveItem(position, position - 1);
   };
 
   const onDownClickHandle = (e: React.MouseEvent) => {
-    if (index === itemCount - 1) return;
+    if (position === itemCount - 1) return;
 
     e.stopPropagation();
-    moveItem(index, index + 1);
+    moveItem(position, position + 1);
   };
 
   return (
-    <div
+    <Paper
       ref={ref}
-      style={{ ...style, opacity: isDragging ? 0 : 1 }}
+      variant="outlined"
+      sx={{
+        p: 1.5,
+        mb: 1,
+        opacity: isDragging ? 0 : 1,
+        cursor: 'move',
+        ...(question.is_answered && { bgcolor: '#e8f5e9' })
+      }}
+
       data-handler-id={handlerId}
       onClick={onToggle}
     >
-      <div>
-        {question.title}
-        <ButtonPannel
-          itemIndex={index}
-          itemCount={itemCount}
-          onUpClickHandle={onUpClickHandle}
-          onDownClickHandle={onDownClickHandle}
-        />
-      </div>
-      {isOpened && <ListItemContent question={question} />}
-    </div>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Typography variant="subtitle1">{question.title}</Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexShrink: 0 }}>
+          <Typography
+            variant="subtitle2"
+            sx={{
+              border: '1px solid',
+              borderColor: 'grey.300',
+              borderRadius: 1,
+              px: 1,
+              py: 0.5,
+              minWidth: 32,
+              textAlign: 'center',
+              fontWeight: 'bold'
+            }}
+          >
+            {question.score}
+          </Typography>
+          <ButtonPannel
+            itemIndex={position}
+            itemCount={itemCount}
+            onUpClickHandle={onUpClickHandle}
+            onDownClickHandle={onDownClickHandle}
+          />
+        </Box>
+      </Box>
+      <Collapse in={isOpened}>
+        <ListItemContent question={question} />
+      </Collapse>
+    </Paper>
   );
 };

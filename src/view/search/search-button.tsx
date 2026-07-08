@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { fetchQuestions } from '../../api/fetch-questions';
+import { Button } from '@mui/material';
 
 export const SearchButton: React.FC = () => {
   const { fromDate, status } = useAppSelector((state) => state.questions);
@@ -11,10 +12,8 @@ export const SearchButton: React.FC = () => {
   };
 
   return (
-    <div>
-      <button disabled={isLoading} onClick={onClickHandle}>
-        {isLoading ? 'Загрузка...' : 'Поиск'}
-      </button>
-    </div>
+    <Button variant="contained" loading={isLoading} onClick={onClickHandle}>
+      Поиск
+    </Button>
   );
 };

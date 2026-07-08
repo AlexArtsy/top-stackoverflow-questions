@@ -1,13 +1,12 @@
 import { Body } from './view/layout/body';
-import { Footer } from './view/layout/footer';
 import { Header } from './view/layout/header';
+import { Container } from '@mui/material';
 
 export default function App() {
   return (
-    <div>
+    <Container maxWidth="md" sx={{ py: 2 }}>
       <Header />
       <Body />
-      <Footer />
-    </div>
+    </Container>
   );
 }

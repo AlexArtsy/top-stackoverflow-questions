@@ -1,3 +1,7 @@
+import { Box, IconButton } from '@mui/material';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+
 interface Props {
   itemIndex: number;
   itemCount: number;
@@ -11,13 +15,13 @@ export const ButtonPannel: React.FC<Props> = ({
   onDownClickHandle
 }) => {
   return (
-    <div>
-      <button disabled={itemIndex === 0} onClick={onUpClickHandle}>
-        ^
-      </button>
-      <button disabled={itemIndex === itemCount - 1} onClick={onDownClickHandle}>
-        v
-      </button>
-    </div>
+    <Box sx={{ display: 'flex', flexShrink: 0 }}>
+      <IconButton disabled={itemIndex === 0} onClick={onUpClickHandle} size="small">
+        <ArrowUpwardIcon />
+      </IconButton>
+      <IconButton disabled={itemIndex === itemCount - 1} onClick={onDownClickHandle} size="small">
+        <ArrowDownwardIcon />
+      </IconButton>
+    </Box>
   );
 };
