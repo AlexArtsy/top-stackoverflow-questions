@@ -1,8 +1,8 @@
 
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import { SOQuestion } from "../model/types";
 
-export const useDoubleClickSwap = (items: SOQuestion[], setItems: Dispatch<SetStateAction<SOQuestion[]>>) => {
+export const useDoubleClickSwap = (items: SOQuestion[], onSwap: (a: number, b: number) => void) => {
 const [swapItemId, setSwapItemId] = useState<number | null>(null);
 
   const handleDoubleClick = (questionId: number) => {
@@ -13,11 +13,7 @@ const [swapItemId, setSwapItemId] = useState<number | null>(null);
     } else {
       const a = items.findIndex((q) => q.question_id === swapItemId);
       const b = items.findIndex((q) => q.question_id === questionId);
-      setItems((prev) => {
-        const next = [...prev];
-        [next[a], next[b]] = [next[b], next[a]];
-        return next;
-      });
+      onSwap(a, b);
       setSwapItemId(null);
     }
   };

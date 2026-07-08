@@ -7,7 +7,6 @@ import { useClickHandler } from '../../hooks/use-click-handler';
 
 interface Props {
   itemId: number;
-  itemCount: number;
   isOpened: boolean;
   position: number;
   question: SOQuestion;
