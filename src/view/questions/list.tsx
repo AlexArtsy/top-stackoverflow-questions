@@ -19,9 +19,12 @@ export const QuestionsList: React.FC = () => {
   const dispatch = useAppDispatch();
   const { items, status, error, setItems } = useQuestionsState();
 
-  const handleToggle = useCallback((questionId: number) => {
-    setOpenedId((prev) => (prev === questionId ? null : questionId));
-  }, [setOpenedId]);
+  const handleToggle = useCallback(
+    (questionId: number) => {
+      setOpenedId((prev) => (prev === questionId ? null : questionId));
+    },
+    [setOpenedId]
+  );
 
   const handleChangeScore = useCallback(
     (questionId: number, delta: number) => {
@@ -33,20 +36,26 @@ export const QuestionsList: React.FC = () => {
     [dispatch, setItems]
   );
 
-  const moveItem = useCallback((dragIndex: number, hoverIndex: number) => {
-    setItems((prev) => {
-      const item = prev[dragIndex];
-      return prev.toSpliced(dragIndex, 1).toSpliced(hoverIndex, 0, item);
-    });
-  },     [setItems]);
+  const moveItem = useCallback(
+    (dragIndex: number, hoverIndex: number) => {
+      setItems((prev) => {
+        const item = prev[dragIndex];
+        return prev.toSpliced(dragIndex, 1).toSpliced(hoverIndex, 0, item);
+      });
+    },
+    [setItems]
+  );
 
-  const swapItems = useCallback((a: number, b: number) => {
-    setItems((prev) => {
-      const next = [...prev];
-      [next[a], next[b]] = [next[b], next[a]];
-      return next;
-    });
-  },     [setItems]);
+  const swapItems = useCallback(
+    (a: number, b: number) => {
+      setItems((prev) => {
+        const next = [...prev];
+        [next[a], next[b]] = [next[b], next[a]];
+        return next;
+      });
+    },
+    [setItems]
+  );
 
   const { selectedId, handleDoubleClick, clearSelection } = useDoubleClickSwap(
     items,
